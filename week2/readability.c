@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-int count_letters (string text);
-int count_words (string text);
-int count_sentences (string text);
+int count_letters(string text);
+int count_words(string text);
+int count_sentences(string text);
 
 int main(void)
 {
@@ -28,26 +28,27 @@ int main(void)
 
     // Compute the Coleman-Liau index
     // L is the average number of letters per 100 words in the text
-    int L = (letters / words) * 100;
+    float L = ((float) letters / words) * 100;
     // S is the average number of sentences per 100 words in the text
-    int S = (sentences / words) * 100;
-    int index = 0.0588 * L - 0.296 * S - 15.8;
+    float S = ((float) sentences / words) * 100;
+    float index = 0.0588 * L - 0.296 * S - 15.8;
+    int grade = round(index);
     // Print the grade level
-    if (index < 1)
+    if (grade < 1)
     {
         printf("Before Grade 1\n");
     }
-    else if (index >= 16)
+    else if (grade >= 16)
     {
         printf("Grade 16+\n");
     }
     else
     {
-        printf("Grade %i\n", index);
+        printf("Grade %i\n", grade);
     }
 }
 
-int count_letters (string text)
+int count_letters(string text)
 {
     // Variable to storage the count of the words
     int count_letters = 0;
@@ -65,7 +66,7 @@ int count_letters (string text)
     return count_letters;
 }
 
-int count_words (string text)
+int count_words(string text)
 {
     // Variable to storage the count of the words
     int count_words = 0;
@@ -83,7 +84,7 @@ int count_words (string text)
     return count_words + 1;
 }
 
-int count_sentences (string text)
+int count_sentences(string text)
 {
     // Variable to storage the count of the sentences
     int count_sentences = 0;
