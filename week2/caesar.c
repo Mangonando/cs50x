@@ -5,6 +5,7 @@
 #include <string.h>
 
 bool only_digits(string s);
+char rotate(char c, int n);
 
 int main(int argc, string argv[])
 {
@@ -20,7 +21,16 @@ int main(int argc, string argv[])
 
     //Input plainText
     string plainText = get_string("plaintext:  ");
-    printf("plainText: %s\n", plainText);
+
+    printf("ciphertext: ");
+
+    // Loop the integer and convert the plaintext to the cypher(rotate function) char by char
+    for (int i = 0; i < strlen(plainText); i++)
+    {
+        // Use rotate function and print cypher text here
+        printf("%c", rotate(plainText[i], key));
+    }
+    printf("\n");
 }
 
 bool only_digits(string s)
@@ -38,17 +48,19 @@ bool only_digits(string s)
     return true;
 }
 
-// Encrypt message here. c is char k is key
-char rotate(char c, int k)
+// Encrypt message here. c is char. n will be the key
+char rotate(char c, int n)
 {
     // Checking if it is uppercase letter, then lowercase, and lastly left the non letter char untouched
     if (isupper(c))
     {
-        return ((c - 'A' + k) % 26) + 'A';
-    } else if (islower(c))
+        return ((c - 'A' + n) % 26) + 'A';
+    }
+    else if (islower(c))
     {
-        return ((c - 'a' + k) % 26) + 'a';
-    } else
+        return ((c - 'a' + n) % 26) + 'a';
+    }
+    else
     {
         return c;
     }
