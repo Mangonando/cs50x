@@ -4,6 +4,7 @@
 #include <string.h>
 
 bool is_alphabetical(string s);
+bool has_duplicates(string s);
 
 int main(int argc, string argv[])
 {
@@ -12,7 +13,7 @@ int main(int argc, string argv[])
     // Catch errors first with an if condition(argc and argv[])
 
     // Validate key
-    if (argc != 2 || !is_alphabetical(argv[1]))
+    if (argc != 2 || !is_alphabetical(argv[1]) || has_duplicates(argv[1]))
     {
         printf("Usage: ./substitution key\n");
         return 1;
@@ -24,8 +25,6 @@ int main(int argc, string argv[])
         printf("Key must contain 26 characters.\n");
         return 1;
     }
-    // Check non-alphabetical chars
-    // No repetition of chars(case insensitive)
 
     // Get plaintext good old get_string
 
@@ -50,4 +49,26 @@ bool is_alphabetical(string s)
         }
     }
     return true;
+}
+
+// Check for duplicate chars for key.
+bool has_duplicates(string s)
+{
+    // Create an array to compare with the key. it will be used as a checklist to compare both keys
+    bool new_key_arr[26] = { false };
+    for (int i = 0; i < strlen(s); i++)
+    {
+        // To make comparison and case insensitive
+        char c = toupper(s[i]);
+        // convert char to array index
+        int index = c - 'A';
+        // Check for duplicate
+        if (new_key_arr[index])
+        {
+            return true;
+        }
+        // mark char as seen
+        new_key_arr[index] = true;
+    }
+    return false;
 }
