@@ -1,6 +1,9 @@
+#include <ctype.h>
 #include <cs50.h>
 #include <stdio.h>
 #include <string.h>
+
+bool is_alphabetical(string s);
 
 int main(int argc, string argv[])
 {
@@ -9,10 +12,16 @@ int main(int argc, string argv[])
     // Catch errors first with an if condition(argc and argv[])
 
     // Validate key
-    // Check key length 26 chars.
-    if (argc != 2 || strlen(argv[1]) != 26)
+    if (argc != 2 || !is_alphabetical(argv[1]))
     {
         printf("Usage: ./substitution key\n");
+        return 1;
+    }
+
+    if (strlen(argv[1]) != 26)
+    {
+        //Check key length 26 chars. Key must contain 26 characters.
+        printf("Key must contain 26 characters.\n");
         return 1;
     }
     // Check non-alphabetical chars
@@ -26,4 +35,19 @@ int main(int argc, string argv[])
     // Leave non-alphabetical chars as it is
 
     // Print ciphertext
+}
+
+//Check for chars for key
+bool is_alphabetical(string s)
+{
+    // loop the chars in the string
+    for (int i = 0; i < strlen(s); i++)
+    {
+        // Check for chars
+        if (!isalpha(s[i]))
+        {
+            return false;
+        }
+    }
+    return true;
 }
