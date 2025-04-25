@@ -27,13 +27,41 @@ int main(int argc, string argv[])
     }
 
     // Get plaintext good old get_string
+    string plainText = get_string("plaintext:  ");
 
     // Encipher
+    printf("ciphertext: ");
     // Map and check which letter from the key should map the letter
-    // Keep case
-    // Leave non-alphabetical chars as it is
+    for (int i = 0; i < strlen(plainText); i++)
+    {
+        // Store i from plainText
+        char c = plainText[i];
 
-    // Print ciphertext
+        if (isupper(c))
+        {
+            // convert char to array index
+            int index = c - 'A';
+            // Take uppercase letter and use uppercase
+            char cipher_char = toupper(argv[1][index]);
+            printf("%c", cipher_char);
+        }
+        else if (islower(c))
+        {
+            // convert char to array index
+            int index = c - 'a';
+            // Take uppercase letter and use lowercase
+            char cipher_char = tolower(argv[1][index]);
+            printf("%c", cipher_char);
+        }
+        else
+        {
+            // Print non alphabetical chars as they are
+            printf("%c", c);
+        }
+    }
+    printf("\n");
+
+    return 0;
 }
 
 //Check for chars for key
