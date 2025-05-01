@@ -1,11 +1,24 @@
-sort1 uses: TODO
+sort1 uses: Bubble sort
 
-How do you know?: TODO
+How do you know?:
+It is the slowest when the list is random.
+Additionally is faster than sort3 when the list is sorted but slower when the list is reversed.
+sorted500000 real time: 0m0.414s
+reversed500000 real time: 0m6.798s
+random500000 real time: 0m7.879s
 
-sort2 uses: TODO
+sort2 uses: Merge sort
 
-How do you know?: TODO
+How do you know?:
+This is the easiest of them. It is the fastest and most effective when the list is sorted, reversed and random
+sorted500000 real time: 0m0.363s
+reversed500000 real time: 0m0.475s
+random500000 real time: 0m0.394s
 
-sort3 uses: TODO
+sort3 uses: Selection sort
 
-How do you know?: TODO
+How do you know?:
+It is faster than sort1 when the list is reversed but slower when the list is sorted
+sorted500000 real time: 0m2.939s
+reversed500000 real time: 0m4.623s
+random500000 real time: 0m4.410s
