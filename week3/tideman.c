@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 // Max number of candidates
 #define MAX 9
@@ -98,29 +99,103 @@ int main(int argc, string argv[])
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    // TODO
+    // Loop candidates
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // if candidate matches
+        if (strcmp(candidates[i], name) == 0)
+        {
+            //Store the index(i) inside ranks[]
+            ranks[rank] = i;
+            return true;
+        }
+    }
     return false;
 }
 
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // TODO
-    return;
+    // loop candidates
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // loop the candidates again and compare it to the candidate in the i loop
+        for (int j = i + 1; j < candidate_count; j++)
+        {
+            // Update the preferences
+            preferences[ranks[i]][ranks[j]]++;
+        }
+    }
 }
 
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    // TODO
-    return;
+    // Start count in 0
+    pair_count = 0;
+
+    // loop candidates
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // loop the candidates again and compare it to the candidate in the i loop
+        for (int j = i + 1; j < candidate_count; j++)
+        {
+            // Skip(continue if the candidate is the same)
+            if (i == j)
+            {
+                continue;
+            }
+            // check if cnadidate i is prefered over j
+            if (preferences[i][j] > preferences[j][i])
+            {
+                //Add pairs to pairs[]
+                pairs[pair_count].winner = i;
+                pairs[pair_count].loser = j;
+                pair_count++;
+            }
+            // check if candidate j is prefered over i
+            else if (preferences[j][i] > preferences[i][j])
+            {
+                //Add pairs to pairs[]
+                pairs[pair_count].winner = j;
+                pairs[pair_count].loser = i;
+                pair_count++;
+            }
+        }
+    }
 }
 
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    // TODO
-    return;
+    // Loop the pair_count
+    for (int i = 0; i < pair_count; i++)
+    {
+        // big pair left. Starting on i then compare with the loop
+        int max_index = i;
+
+        // Loop the unsorted pairs left
+        for (int j = i; j < pair_count; j++)
+        {
+            // Get big chances of winnint for current pair
+            int big_j = preferences[pairs[j].winner][pairs[j].loser];
+            // Get big chances of winnint for current max
+            int big_max = preferences[pairs[max_index].winner][pairs[max_index].loser];
+
+            // Update max index if curent pair is larger than current max
+            if (big_j > big_max)
+            {
+                max_index = j;
+            }
+        }
+        // Swap if a bigger pair appears
+        if (max_index != i)
+        {
+            pair temp = pairs[i];
+            pairs[i] = pairs[max_index];
+            pairs[max_index] = temp;
+        }
+    }
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
