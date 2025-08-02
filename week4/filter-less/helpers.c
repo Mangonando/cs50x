@@ -78,5 +78,48 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    return;
+    // Create a copy of image
+    RGBTRIPLE copy[height][width];
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            copy[i][j] = image[i][j];
+        }
+    }
+
+    // Loop each pixel(2 loops)
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            int sumRed = 0;
+            int sumGreen = 0;
+            int sumBlue = 0;
+            int count = 0;
+
+            // Check neighbors in each direction
+            for (int row = -1; row <= 1; row++)
+            {
+                for (int col = -1; col <= 1; col++)
+                {
+                    int neighborRow = i + row;
+                    int neighborCol = j + col;
+
+                    // If neighbor is in the box keep it
+                    if (neighborRow >= 0 && neighborRow < height && neighborCol >= 0 && neighborCol < width)
+                    {
+                        sumRed += copy[neighborRow][neighborCol].rgbtRed;
+                        sumGreen += copy[neighborRow][neighborCol].rgbtGreen;
+                        sumBlue += copy[neighborRow][neighborCol].rgbtBlue;
+                        count++;
+                    }
+                }
+            }
+            // Compute and round the average
+            image[i][j].rgbtRed = (BYTE) round((float)sumRed / count);
+            image[i][j].rgbtGreen = (BYTE) round((float)sumGreen / count);
+            image[i][j].rgbtBlue = (BYTE) round((float)sumBlue / count);
+        }
+    }
 }
